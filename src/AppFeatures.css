@@ -275,6 +275,8 @@
 .main-vertical-sidebar-overlay.active {
   opacity: 1;
   pointer-events: auto;
+  cursor: pointer;
+  touch-action: manipulation;
 }
 
 .main-vertical-sidebar {

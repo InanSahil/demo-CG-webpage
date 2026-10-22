@@ -30,6 +30,10 @@ export default function AuthenticatedLayout({
   const [isSidebarPinned, setIsSidebarPinned] = useState(false);
   const hoverTimeoutRef = useRef<number | null>(null);
 
+  // Refs for tracking click/tap outside the sidebar drawer and logo button
+  const sidebarRef = useRef<HTMLElement | null>(null);
+  const logoButtonRef = useRef<HTMLDivElement | null>(null);
+
   // Profile Dropdown state
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const profileDropdownRef = useRef<HTMLDivElement | null>(null);
@@ -38,6 +42,7 @@ export default function AuthenticatedLayout({
   const [prevPath, setPrevPath] = useState(location.pathname);
   if (location.pathname !== prevPath) {
     setPrevPath(location.pathname);
+    setIsSidebarPinned(false);
     setIsSidebarHovered(false);
     setIsProfileOpen(false);
   }
@@ -71,6 +76,11 @@ export default function AuthenticatedLayout({
 
   const isSidebarVisible = isSidebarHovered || isSidebarPinned;
 
+  const isMobileOrTablet = () => {
+    if (typeof window === "undefined") return false;
+    return window.innerWidth <= 1024;
+  };
+
   // Lock background scrolling on mobile & tablet when the sidebar drawer is open
   useEffect(() => {
     if (isSidebarVisible && typeof window !== "undefined" && window.innerWidth <= 1024) {
@@ -82,7 +92,62 @@ export default function AuthenticatedLayout({
     }
   }, [isSidebarVisible]);
 
+  const closeSidebar = () => {
+    if (hoverTimeoutRef.current) {
+      window.clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
+    }
+    setIsSidebarPinned(false);
+    setIsSidebarHovered(false);
+  };
+
+  const handleLogoClick = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (hoverTimeoutRef.current) {
+      window.clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
+    }
+    // Tapping logo toggles permanent open state; on mobile it stays permanent unless tapped outside
+    setIsSidebarPinned((prev) => !prev);
+    setIsSidebarHovered(false);
+  };
+
+  // Click / tap outside the sidebar to dismiss permanently (on both mobile and desktop)
+  useEffect(() => {
+    if (!isSidebarVisible) return;
+
+    const handleOutsideClick = (e: MouseEvent | TouchEvent) => {
+      const target = e.target as Node;
+      // If tapped inside the sidebar drawer, keep it open
+      if (sidebarRef.current && sidebarRef.current.contains(target)) {
+        return;
+      }
+      // If tapped on the logo toggle button, let handleLogoClick toggle it
+      if (logoButtonRef.current && logoButtonRef.current.contains(target)) {
+        return;
+      }
+      // Tapped outside the sidebar! Dismiss permanently.
+      closeSidebar();
+    };
+
+    // Small delay ensures opening tap event does not immediately close the drawer
+    const timer = window.setTimeout(() => {
+      document.addEventListener("mousedown", handleOutsideClick);
+      document.addEventListener("touchstart", handleOutsideClick, { passive: true });
+    }, 60);
+
+    return () => {
+      window.clearTimeout(timer);
+      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("touchstart", handleOutsideClick);
+    };
+  }, [isSidebarVisible]);
+
   const handleLogoMouseEnter = () => {
+    if (isMobileOrTablet()) return; // Never use hover on touch/mobile/tablet
     if (hoverTimeoutRef.current) {
       window.clearTimeout(hoverTimeoutRef.current);
       hoverTimeoutRef.current = null;
@@ -91,12 +156,14 @@ export default function AuthenticatedLayout({
   };
 
   const handleLogoMouseLeave = () => {
+    if (isMobileOrTablet()) return; // Never use hover on touch/mobile/tablet
     hoverTimeoutRef.current = window.setTimeout(() => {
       setIsSidebarHovered(false);
     }, 280);
   };
 
   const handleSidebarMouseEnter = () => {
+    if (isMobileOrTablet()) return;
     if (hoverTimeoutRef.current) {
       window.clearTimeout(hoverTimeoutRef.current);
       hoverTimeoutRef.current = null;
@@ -105,19 +172,10 @@ export default function AuthenticatedLayout({
   };
 
   const handleSidebarMouseLeave = () => {
+    if (isMobileOrTablet()) return;
     hoverTimeoutRef.current = window.setTimeout(() => {
       setIsSidebarHovered(false);
     }, 280);
-  };
-
-  const handleLogoClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsSidebarPinned((prev) => !prev);
-  };
-
-  const closeSidebar = () => {
-    setIsSidebarPinned(false);
-    setIsSidebarHovered(false);
   };
 
   const orgName = "CyberGuard Enterprise";
@@ -131,6 +189,7 @@ export default function AuthenticatedLayout({
         className={`floating-island floating-island-logo admin-floating-logo interactive-component ${
           isSidebarVisible ? "sidebar-is-open" : ""
         }`}
+        ref={logoButtonRef}
         onMouseEnter={handleLogoMouseEnter}
         onMouseLeave={handleLogoMouseLeave}
         onClick={handleLogoClick}
@@ -139,7 +198,15 @@ export default function AuthenticatedLayout({
         aria-label={isSidebarVisible ? "Close navigation menu" : "Open navigation menu"}
         title="CyberGuard Admin · Click or hover to open navigation sidebar"
       >
-        <CyberGuardLogo to="/dashboard" className="island-logo-link" />
+        <CyberGuardLogo
+          to="/dashboard"
+          className="island-logo-link"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleLogoClick(e);
+          }}
+        />
         <span className="admin-menu-toggle-icon" aria-hidden="true">
           {isSidebarVisible ? (
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -322,10 +389,12 @@ export default function AuthenticatedLayout({
           isSidebarVisible ? "active" : ""
         }`}
         onClick={closeSidebar}
+        onTouchStart={closeSidebar}
         aria-hidden="true"
       />
 
       <aside
+        ref={sidebarRef}
         className={`main-vertical-sidebar ${
           isSidebarVisible ? "visible" : ""
         } ${isSidebarPinned ? "pinned" : ""}`}
@@ -334,8 +403,23 @@ export default function AuthenticatedLayout({
         aria-label="Admin vertical sidebar"
       >
         <div className="main-vertical-sidebar-header">
-          <div className="sidebar-logo-container" onClick={handleLogoClick}>
-            <CyberGuardLogo to="/dashboard" showName={true} className="sidebar-brand-logo" />
+          <div
+            className="sidebar-logo-container"
+            onClick={() => {
+              closeSidebar();
+              navigate("/dashboard");
+            }}
+          >
+            <CyberGuardLogo
+              to="/dashboard"
+              showName={true}
+              className="sidebar-brand-logo"
+              onClick={(e) => {
+                e.preventDefault();
+                closeSidebar();
+                navigate("/dashboard");
+              }}
+            />
           </div>
 
           <div className="sidebar-header-right">
