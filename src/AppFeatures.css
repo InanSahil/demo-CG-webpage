@@ -4916,3 +4916,859 @@
     right: -10px !important;
   }
 }
+
+
+/* ============================================================
+   RESPONSIVE DESIGN OPTIMIZATIONS FOR TABLET & MOBILE
+   (Laptop & PC views > 1024px remain 100% undisturbed)
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. TABLET VIEW (768px to 1024px)
+   ------------------------------------------------------------ */
+@media (max-width: 1024px) {
+  /* Layout Padding */
+  .authenticated-main {
+    padding: 84px 24px 56px 24px !important;
+  }
+
+  .floating-islands-header {
+    padding: 0 20px !important;
+  }
+
+  /* Taskbar Nav on Tablet: slightly tighter gaps */
+  .floating-island-nav {
+    padding: 4px 10px !important;
+  }
+
+  .island-nav-link {
+    font-size: 12.5px !important;
+    padding: 5px 10px !important;
+  }
+
+  /* Admin Dashboard Metrics Grid: 2x2 */
+  .admin-metrics-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+  }
+
+  /* Executive Action Grid: 1 column */
+  .dashboard-action-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  /* Department Units Grid: 2 columns */
+  .department-units-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+  }
+
+  /* Command Hub Shortcuts Grid: 2 columns */
+  .hub-cards-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+  }
+
+  /* Consensus body: stacked on tablet */
+  .consensus-body {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+
+  /* Modals: fit tablet screen gracefully */
+  .admin-modal-card,
+  .csv-uploader-modal,
+  .directory-form-modal {
+    max-width: 620px !important;
+    width: 90vw !important;
+  }
+
+  /* Home hero on tablet: stacked text & video */
+  .home-hero {
+    flex-direction: column !important;
+    gap: 28px !important;
+    padding-top: 72px !important;
+  }
+
+  .home-hero-visual {
+    width: 100% !important;
+    max-width: 720px !important;
+  }
+
+  .home-highlight-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+  }
+}
+
+/* ------------------------------------------------------------
+   2. MOBILE & SMALL TABLET VIEW (<= 768px)
+   ------------------------------------------------------------ */
+@media (max-width: 768px) {
+  /* Floating Taskbar Islands (Public Layout) */
+  .floating-islands-header {
+    padding: 0 12px !important;
+    top: 12px !important;
+  }
+
+  /* Hide crowded center 4-link island on mobile. Users tap Logo to open full vertical drawer */
+  .floating-island-nav {
+    display: none !important;
+  }
+
+  .floating-island-logo {
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .floating-island-auth {
+    padding: 3px 8px !important;
+  }
+
+  .island-auth-buttons {
+    gap: 6px !important;
+  }
+
+  .island-admin-pill-link {
+    padding: 4px 8px !important;
+    font-size: 11px !important;
+  }
+
+  .island-login-btn,
+  .island-register-btn,
+  .island-dashboard-btn {
+    padding: 4px 10px !important;
+    font-size: 12px !important;
+  }
+
+  /* Authenticated Layout Controls on Mobile */
+  .admin-floating-logo {
+    top: 12px !important;
+    left: 12px !important;
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .admin-floating-controls {
+    top: 12px !important;
+    right: 12px !important;
+    gap: 8px !important;
+  }
+
+  .admin-org-account-island {
+    padding: 2px 4px !important;
+  }
+
+  .admin-account-trigger-btn {
+    padding: 2px 6px !important;
+    gap: 6px !important;
+  }
+
+  .org-account-title {
+    display: none !important;
+  }
+
+  .org-account-role {
+    font-size: 10px !important;
+  }
+
+  .admin-profile-dropdown-menu {
+    width: min(calc(100vw - 24px), 280px) !important;
+    right: 0 !important;
+    top: calc(100% + 8px) !important;
+    padding: 14px !important;
+  }
+
+  .authenticated-main {
+    padding: 72px 14px 40px 14px !important;
+  }
+
+  .main-vertical-sidebar {
+    width: min(86vw, 320px) !important;
+  }
+
+  /* Dashboard Heading */
+  .dashboard-heading {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  .dashboard-heading h1 {
+    font-size: 21px !important;
+    line-height: 1.25 !important;
+    margin: 4px 0 6px 0 !important;
+  }
+
+  .dashboard-heading p {
+    font-size: 12.5px !important;
+    line-height: 1.45 !important;
+  }
+
+  .dashboard-badge-row {
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+
+  /* Auto-Run 36-Hour Remediation Hero Banner */
+  .dashboard-auto-run-hero {
+    padding: 16px 14px !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 14px !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  .auto-run-hero-left {
+    min-width: 0 !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+
+  .auto-run-title-group h2 {
+    font-size: 16px !important;
+    line-height: 1.35 !important;
+    margin-bottom: 4px !important;
+  }
+
+  .auto-run-title-group p {
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+  }
+
+  .auto-run-stats-row {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+    width: 100% !important;
+    margin-top: 4px !important;
+  }
+
+  .hero-stat-chip {
+    padding: 6px 6px !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 2px !important;
+    min-width: 0 !important;
+  }
+
+  .hero-stat-chip .stat-label {
+    font-size: 9px !important;
+    letter-spacing: 0.02em !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .hero-stat-chip .stat-val {
+    font-size: 14px !important;
+    line-height: 1 !important;
+  }
+
+  .auto-run-hero-action {
+    width: 100% !important;
+  }
+
+  .auto-run-hero-button {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 12px 16px !important;
+    min-height: 48px !important;
+  }
+
+  .auto-run-hero-button .hero-btn-text strong {
+    font-size: 13.5px !important;
+  }
+
+  .auto-run-hero-button .hero-btn-text small {
+    font-size: 10.5px !important;
+  }
+
+  /* Metric Highlights Grid: 2 columns on mobile */
+  .admin-metrics-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .admin-metric-card {
+    padding: 14px 12px !important;
+    gap: 8px !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  .metric-label {
+    font-size: 11px !important;
+  }
+
+  .metric-big-number {
+    font-size: 24px !important;
+  }
+
+  .metric-sub-number {
+    font-size: 12px !important;
+  }
+
+  .metric-note {
+    display: none !important; /* Hide secondary text to keep cards neat */
+  }
+
+  .metric-footer {
+    padding-top: 6px !important;
+    border-top: none !important;
+  }
+
+  /* Admin Threat Consensus Panel */
+  .admin-threat-consensus-panel {
+    padding: 16px 14px !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  .consensus-panel-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  .consensus-panel-header h2 {
+    font-size: 16px !important;
+  }
+
+  .compromised-admin-profile {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    padding: 10px 12px !important;
+  }
+
+  .threat-type-pill {
+    margin-left: 0 !important;
+  }
+
+  .voting-action-buttons {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+
+  .voting-action-buttons button {
+    width: 100% !important;
+    min-height: 44px !important;
+    justify-content: center !important;
+    margin-left: 0 !important;
+  }
+
+  /* Department Graph Section */
+  .dashboard-department-graph-section {
+    padding: 18px 14px !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  .department-graph-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+
+  .department-graph-header h2 {
+    font-size: 17px !important;
+  }
+
+  .graph-header-actions {
+    width: 100% !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+  }
+
+  .graph-legend {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    font-size: 11px !important;
+  }
+
+  /* Allow smooth horizontal touch scroll for department column bars on mobile */
+  .department-graph-container {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 12px !important;
+  }
+
+  .graph-bars-grid {
+    display: flex !important;
+    min-width: 480px !important;
+    gap: 10px !important;
+  }
+
+  .dept-graph-column {
+    min-width: 78px !important;
+    flex: 1 !important;
+  }
+
+  .dept-bar-value strong {
+    font-size: 15px !important;
+  }
+
+  .dept-bar-meta strong {
+    font-size: 11px !important;
+  }
+
+  .dept-bar-meta span {
+    font-size: 10px !important;
+  }
+
+  /* Workforce & Organization Directory Console */
+  .workforce-directory-section {
+    padding: 16px 12px !important;
+    gap: 14px !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  .workforce-directory-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  .directory-header-titles h2 {
+    font-size: 17px !important;
+  }
+
+  .directory-header-titles p {
+    font-size: 12px !important;
+  }
+
+  .directory-header-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 6px !important;
+    width: 100% !important;
+  }
+
+  .directory-header-actions button {
+    width: 100% !important;
+    padding: 8px 4px !important;
+    font-size: 11px !important;
+    justify-content: center !important;
+    min-height: 40px !important;
+    margin-left: 0 !important;
+  }
+
+  .workforce-directory-controls {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  /* Swipeable tab strip on mobile */
+  .directory-tabs-group {
+    display: flex !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 6px !important;
+    gap: 6px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .directory-tab-button {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    font-size: 11.5px !important;
+    padding: 6px 12px !important;
+  }
+
+  .directory-search-box {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .directory-search-input {
+    font-size: 12.5px !important;
+    padding: 8px 30px 8px 12px !important;
+  }
+
+  /* Touch-scrollable personnel table */
+  .table-responsive {
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    border-radius: var(--radius-sm) !important;
+    border: 1px solid var(--border-subtle) !important;
+  }
+
+  .workforce-data-table {
+    min-width: 660px !important;
+    font-size: 12px !important;
+  }
+
+  .workforce-data-table th {
+    padding: 10px 10px !important;
+    font-size: 10px !important;
+  }
+
+  .workforce-data-table td {
+    padding: 10px 10px !important;
+  }
+
+  .workforce-table-footer {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
+  }
+
+  /* Department Units Grid: 1 column on mobile */
+  .department-units-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .dept-unit-card {
+    padding: 16px !important;
+    gap: 12px !important;
+  }
+
+  /* Active Escalation Items */
+  .panel-escalation-item {
+    padding: 14px 12px !important;
+  }
+
+  .escalation-item-top {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
+  }
+
+  .escalation-item-actions {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  .escalation-item-actions button {
+    width: 100% !important;
+    min-height: 40px !important;
+    justify-content: center !important;
+    margin-left: 0 !important;
+  }
+
+  /* Unplanned Device Logins */
+  .anomalous-device-item {
+    padding: 14px 12px !important;
+  }
+
+  .anomaly-details-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .anomaly-action-row button {
+    width: 100% !important;
+    min-height: 44px !important;
+    justify-content: center !important;
+  }
+
+  /* Hub Cards Grid */
+  .hub-cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .hub-card {
+    padding: 14px 16px !important;
+  }
+
+  /* Modals on Mobile: full width & stacked buttons */
+  .admin-modal-card,
+  .csv-uploader-modal,
+  .directory-form-modal {
+    width: 95vw !important;
+    max-width: 95vw !important;
+    padding: 18px 14px !important;
+    border-radius: var(--radius-md) !important;
+    gap: 14px !important;
+  }
+
+  .form-row-2col {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .modal-actions,
+  .modal-actions-row {
+    flex-direction: column-reverse !important;
+    width: 100% !important;
+    gap: 10px !important;
+    margin-top: 18px !important;
+  }
+
+  .modal-actions button,
+  .modal-actions-row button,
+  .modal-actions .button,
+  .modal-actions-row .button {
+    width: 100% !important;
+    min-height: 44px !important;
+    justify-content: center !important;
+    margin-left: 0 !important;
+  }
+
+  .csv-dropzone-box {
+    padding: 20px 12px !important;
+  }
+
+  .preview-table-container {
+    max-height: 160px !important;
+  }
+
+  /* Departments Page Header */
+  .departments-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  .departments-header h1 {
+    font-size: 21px !important;
+  }
+
+  .departments-header-stats {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+    width: 100% !important;
+  }
+
+  .dept-stat-pill {
+    min-width: 0 !important;
+    padding: 6px 6px !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .dept-stat-pill .stat-pill-label {
+    font-size: 9px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .dept-stat-pill .stat-pill-value {
+    font-size: 14px !important;
+  }
+
+  /* Employees Page on Mobile */
+  .employees-header-stat-chips {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+    width: 100% !important;
+  }
+
+  .emp-stat-chip {
+    padding: 6px 6px !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .emp-stat-chip .stat-chip-label {
+    font-size: 9px !important;
+  }
+
+  .emp-stat-chip .stat-chip-num {
+    font-size: 14px !important;
+  }
+
+  .automation-command-strip {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    padding: 14px !important;
+  }
+
+  .automation-actions-group {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  .automation-actions-group button {
+    width: 100% !important;
+    justify-content: center !important;
+    min-height: 42px !important;
+  }
+
+  .warning-slots-timeline {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .emp-card-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+
+  .emp-action-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  .emp-buttons-group {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  .emp-buttons-group button {
+    width: 100% !important;
+    min-height: 40px !important;
+    justify-content: center !important;
+    margin-left: 0 !important;
+  }
+
+  /* Devices Page on Mobile */
+  .device-directory-panel {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .device-table-header,
+  .device-row {
+    min-width: 760px !important;
+  }
+
+  /* Public Home Page Hero on Mobile */
+  .home-hero {
+    flex-direction: column !important;
+    gap: 24px !important;
+    padding-top: 56px !important;
+  }
+
+  .home-hero-title {
+    font-size: 26px !important;
+    line-height: 1.25 !important;
+  }
+
+  .home-hero-description {
+    font-size: 13.5px !important;
+  }
+
+  .home-hero-actions {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+
+  .home-hero-actions .button {
+    width: 100% !important;
+    justify-content: center !important;
+    min-height: 46px !important;
+  }
+
+  .home-stat-chips {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+    width: 100% !important;
+  }
+
+  .stat-chip {
+    padding: 8px 6px !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .stat-chip-label {
+    font-size: 10px !important;
+  }
+
+  .stat-chip-value {
+    font-size: 15px !important;
+  }
+
+  /* Video player responsive aspect ratio on mobile */
+  .home-hero-video {
+    width: 100% !important;
+    min-height: auto !important;
+    max-height: 260px !important;
+    aspect-ratio: 16/9 !important;
+  }
+
+  .home-intro-video {
+    min-height: auto !important;
+    max-height: 260px !important;
+  }
+
+  .home-highlight-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .home-cta {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 16px !important;
+    padding: 24px 16px !important;
+  }
+
+  .home-cta-button {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* Site Footer on Mobile */
+  .footer-main {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .footer-brand {
+    align-items: flex-start !important;
+  }
+}
+
+/* ------------------------------------------------------------
+   3. EXTRA SMALL MOBILE VIEW (<= 480px)
+   ------------------------------------------------------------ */
+@media (max-width: 480px) {
+  .authenticated-main {
+    padding: 68px 10px 36px 10px !important;
+  }
+
+  .admin-metrics-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+
+  .admin-metric-card {
+    padding: 12px 10px !important;
+  }
+
+  .metric-big-number {
+    font-size: 22px !important;
+  }
+
+  .directory-header-actions {
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+  }
+
+  .directory-header-actions button {
+    width: 100% !important;
+  }
+
+  .auto-run-stats-row {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .departments-header-stats {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .employees-header-stat-chips {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
