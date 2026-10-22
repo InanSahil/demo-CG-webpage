@@ -56,6 +56,8 @@ export default function AuthenticatedLayout({
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setIsProfileOpen(false);
+        setIsSidebarPinned(false);
+        setIsSidebarHovered(false);
       }
     };
 
@@ -68,6 +70,17 @@ export default function AuthenticatedLayout({
   }, []);
 
   const isSidebarVisible = isSidebarHovered || isSidebarPinned;
+
+  // Lock background scrolling on mobile & tablet when the sidebar drawer is open
+  useEffect(() => {
+    if (isSidebarVisible && typeof window !== "undefined" && window.innerWidth <= 1024) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isSidebarVisible]);
 
   const handleLogoMouseEnter = () => {
     if (hoverTimeoutRef.current) {
@@ -115,13 +128,33 @@ export default function AuthenticatedLayout({
     <div className="authenticated-layout">
       {/* 1. FLOATING LOGO ISLAND (TOP LEFT - NEVER DISAPPEARS, HOVER/CLICK OPENS SIDE TASK BAR) */}
       <div
-        className="floating-island floating-island-logo admin-floating-logo interactive-component"
+        className={`floating-island floating-island-logo admin-floating-logo interactive-component ${
+          isSidebarVisible ? "sidebar-is-open" : ""
+        }`}
         onMouseEnter={handleLogoMouseEnter}
         onMouseLeave={handleLogoMouseLeave}
         onClick={handleLogoClick}
+        role="button"
+        tabIndex={0}
+        aria-label={isSidebarVisible ? "Close navigation menu" : "Open navigation menu"}
         title="CyberGuard Admin · Click or hover to open navigation sidebar"
       >
         <CyberGuardLogo to="/dashboard" className="island-logo-link" />
+        <span className="admin-menu-toggle-icon" aria-hidden="true">
+          {isSidebarVisible ? (
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          ) : (
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          )}
+        </span>
+        <span className="admin-menu-toggle-label">Menu</span>
       </div>
 
       {/* 2. FLOATING RIGHT CONTROLS: THEME TOGGLE & ORGANIZATION ACCOUNT PROFILE DROPDOWN */}
@@ -336,8 +369,9 @@ export default function AuthenticatedLayout({
               }
               onClick={closeSidebar}
             >
+              <IconHome size={17} className="sidebar-nav-icon" />
+              <span>Executive Overview</span>
               <span className="nav-bullet" />
-              <span>Overview</span>
             </NavLink>
             <NavLink
               to="/threats"
@@ -346,8 +380,9 @@ export default function AuthenticatedLayout({
               }
               onClick={closeSidebar}
             >
-              <span className="nav-bullet" />
+              <IconShield size={17} className="sidebar-nav-icon" />
               <span>Threat Center</span>
+              <span className="nav-bullet" />
             </NavLink>
           </nav>
 
@@ -360,8 +395,9 @@ export default function AuthenticatedLayout({
               }
               onClick={closeSidebar}
             >
-              <span className="nav-bullet" />
+              <IconLayers size={17} className="sidebar-nav-icon" />
               <span>Departments</span>
+              <span className="nav-bullet" />
             </NavLink>
             <NavLink
               to="/employees"
@@ -370,8 +406,9 @@ export default function AuthenticatedLayout({
               }
               onClick={closeSidebar}
             >
-              <span className="nav-bullet" />
+              <IconUsers size={17} className="sidebar-nav-icon" />
               <span>Employees &amp; Warnings</span>
+              <span className="nav-bullet" />
             </NavLink>
             <NavLink
               to="/devices"
@@ -380,8 +417,9 @@ export default function AuthenticatedLayout({
               }
               onClick={closeSidebar}
             >
-              <span className="nav-bullet" />
+              <IconLaptop size={17} className="sidebar-nav-icon" />
               <span>Devices &amp; Logins</span>
+              <span className="nav-bullet" />
             </NavLink>
           </nav>
 
@@ -394,16 +432,18 @@ export default function AuthenticatedLayout({
               }
               onClick={closeSidebar}
             >
-              <span className="nav-bullet" />
+              <IconSettings size={17} className="sidebar-nav-icon" />
               <span>Settings</span>
+              <span className="nav-bullet" />
             </NavLink>
             <NavLink
               to="/"
               className="main-vertical-nav-link"
               onClick={closeSidebar}
             >
-              <span className="nav-bullet" style={{ background: "var(--cg-green)" }} />
+              <IconShield size={17} className="sidebar-nav-icon" style={{ color: "var(--cg-green)" }} />
               <span>Public Site</span>
+              <span className="nav-bullet" style={{ background: "var(--cg-green)" }} />
             </NavLink>
           </nav>
 
